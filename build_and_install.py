@@ -17,12 +17,21 @@ cmds = {
           "g3log": {
                       "repo": "submods/g3log",
                       "installdir": "install/g3log",
-                      "builddir"  : "cd {}",
                       "build-variants"  : [
                                       "cmake -DG3_SHARED_LIB=ON  -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/shared/Debug ..",
                                       "cmake -DG3_SHARED_LIB=ON  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/shared/Release ..",
                                       "cmake -DG3_SHARED_LIB=OFF -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/static/Debug ..",
                                       "cmake -DG3_SHARED_LIB=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/static/Release ..",
+                                    ]
+                   },
+          "yaml-cpp": {
+                      "repo": "submods/yaml-cpp",
+                      "installdir": "install/yaml-cpp",
+                      "build-variants"  : [
+                                      "cmake -DYAML_BUILD_SHARED_LIBS=ON  -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/shared/Debug ..",
+                                      "cmake -DYAML_BUILD_SHARED_LIBS=ON  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/shared/Release ..",
+                                      "cmake -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/static/Debug ..",
+                                      "cmake -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/static/Release ..",
                                     ]
                    },
 }
@@ -66,7 +75,7 @@ class SubModule(object):
     return result
 
   def Build(self):
-    buildDirCmd = self.opt["builddir"].format(self.buildDir)
+    buildDirCmd = "cd {}".format(self.buildDir)
     for cmd in self.opt["build-variants"]:
       # Delete the build directory
       self.BuildInit()
