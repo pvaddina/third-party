@@ -1,3 +1,6 @@
 [submodule "submods/g3log"]
 	path = submods/g3log
 	url = https://github.com/KjellKod/g3log.git
+[submodule "submods/yaml-cpp"]
+	path = submods/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
