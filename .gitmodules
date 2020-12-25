@@ -4,3 +4,6 @@
 [submodule "submods/yaml-cpp"]
 	path = submods/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "submods/spdlog"]
+	path = submods/spdlog
+	url = https://github.com/gabime/spdlog.git

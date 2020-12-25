@@ -35,6 +35,16 @@ cmds = {
                                       "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/static/Release ..",
                                     ]
                    },
+          "spdlog": {
+                      "repo": "submods/spdlog",
+                      "installdir": "install/spdlog",
+                      "build-variants"  : [
+#                                      "cmake -DG3_SHARED_LIB=ON  -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/shared/Debug ..",
+#                                      "cmake -DG3_SHARED_LIB=ON  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/shared/Release ..",
+                                      "cmake -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/static/Debug ..",
+                                      "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/static/Release ..",
+                                    ]
+                   },
           "yaml-cpp": {
                       "repo": "submods/yaml-cpp",
                       "installdir": "install/yaml-cpp",
