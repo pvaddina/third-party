@@ -12,6 +12,8 @@ if detectPlatform == "Windows":
 curWorkingDir = os.path.dirname(os.path.realpath(__file__))
 
 update_cmd = "git submodule update --remote"
+gen_cmake_cmd = "cmake .. -DCMAKE_BUILD_TYPE={}"
+build_cmd = "cmake --build ."
 build_install_cmd = "cmake --build . --target install"
 
 cmds = {
@@ -45,43 +47,40 @@ cmds = {
                    },
 }
 
+def DeleteDir(dir2Rem):
+  result = True
+  if os.path.exists(dir2Rem):
+    try:
+      print("Removing the directory {}".format(dir2Rem))
+      shutil.rmtree(dir2Rem)
+    except OSError as e:
+      print("Error {} while removing the directory {}".format(e.strerror, dir2Rem))
+      result = False
+  return result
+
+def CreateDir(dir2Create):
+  result = True
+  try:
+    print("Creating the directory {}".format(dir2Create))
+    os.mkdir(dir2Create)
+  except OSError as e:
+    print("Error {} while creating the directory {}".format(e.strerror, dir2Create))
+    result = False
+  return result
+
+
 class SubModule(object):
   def __init__(self, inArgs):
     self.opt = inArgs
     self.buildDir = curWorkingDir + "/" + self.opt["repo"] + "/build"
     self.installDir = curWorkingDir + "/" + self.opt["installdir"]
+    print("BuildDir={}\nInstallDir={}".format(self.buildDir, self.installDir))
 
   def InstallInit(self):
-    result = True
-    if os.path.exists(self.installDir):
-      try:
-        print("Removing the install directory {}".format(self.installDir))
-        shutil.rmtree(self.installDir)
-      except OSError as e:
-        print("Error {} while removing the install directory {}".format(e.strerror, self.installDir))
-        result = False
-
-    return result
+    return DeleteDir(self.installDir)
 
   def BuildInit(self):
-    result = True
-    if os.path.exists(self.buildDir):
-      try:
-        print("Removing the build directory {}".format(self.buildDir))
-        shutil.rmtree(self.buildDir)
-      except OSError as e:
-        print("Error {} while removing the build directory {}".format(e.strerror, self.buildDir))
-        result = False
-    
-    if result:
-      try:
-        print("Creating the build directory {}".format(self.installDir))
-        os.mkdir(self.buildDir)
-      except OSError as e:
-        print("Error {} while creating the directory {}".format(e.strerror, self.buildDir))
-        result = False
-
-    return result
+    return DeleteDir(self.buildDir) and CreateDir(self.buildDir)
 
   def Build(self):
     buildDirCmd = "cd {}".format(self.buildDir)
@@ -99,14 +98,7 @@ class SubModule(object):
     
 
 def init():
-  # 1. Remove the install directory
-  installDir = curWorkingDir + "/install"
-  try:
-    os.rmdir(installDir)
-  except OSError as e:
-    print("Cannot remove directory: \"{}\". Error: {}. Ignoring the error ...".format(installDir, e.strerror))
-
-  # 2. Update the submodues
+  # 1. Update the submodues
   subprocess.call(update_cmd, shell=True)
 
 
@@ -125,7 +117,13 @@ if __name__ == '__main__':
     if proj in cmds.keys():
       ExecSubMod(cmds[proj])
     else:
-      print("Project not declared. Aborting ...")
+      print("Not a predefined project. Assuming one of the consumer projects")
+      projDir = "{}/{}/{}".format(curWorkingDir, proj, "build")
+      DeleteDir(projDir)
+      CreateDir(projDir)
+      allBuildCmds = "cd {}".format(projDir) + seperator + gen_cmake_cmd.format("Debug") + seperator + build_cmd
+      print("Used command: {}".format(allBuildCmds))
+      subprocess.call(allBuildCmds, shell=True)
   else:
     for proj in cmds.keys():
       ExecSubMod(cmds[proj])
