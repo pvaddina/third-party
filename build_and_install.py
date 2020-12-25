@@ -1,6 +1,7 @@
 import os
 import subprocess
 import shutil
+import sys
 import platform as pf
 
 detectPlatform = pf.system()
@@ -22,6 +23,14 @@ cmds = {
                                       "cmake -DG3_SHARED_LIB=ON  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/shared/Release ..",
                                       "cmake -DG3_SHARED_LIB=OFF -DCMAKE_BUILD_TYPE=Debug   -DCMAKE_INSTALL_PREFIX={}/static/Debug ..",
                                       "cmake -DG3_SHARED_LIB=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/static/Release ..",
+                                    ]
+                   },
+          "g3log-wrapper": {
+                      "repo": "g3log-wrapper",
+                      "installdir": "install/g3log-wrapper",
+                      "build-variants"  : [
+                                      "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX={}/static/Debug ..",
+                                      "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX={}/static/Release ..",
                                     ]
                    },
           "yaml-cpp": {
@@ -101,15 +110,25 @@ def init():
   subprocess.call(update_cmd, shell=True)
 
 
+def ExecSubMod(mod):
+  sMod = SubModule(mod)
+  if sMod.InstallInit():
+    sMod.Build()
+  else:
+    print("Install pre initialization step failed")
+
+
 if __name__ == '__main__':
   init()
-
-  for key in cmds.keys():
-    sMod = SubModule(cmds[key])
-    if sMod.InstallInit():
-      sMod.Build()
+  if len(sys.argv) > 1:
+    proj = sys.argv[1]
+    if proj in cmds.keys():
+      ExecSubMod(cmds[proj])
     else:
-      print("Install pre initialization step failed")
+      print("Project not declared. Aborting ...")
+  else:
+    for proj in cmds.keys():
+      ExecSubMod(cmds[proj])
 
 
 
