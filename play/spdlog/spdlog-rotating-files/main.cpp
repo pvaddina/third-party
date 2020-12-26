@@ -1,5 +1,5 @@
 #include "spdlog/spdlog.h"
-#include "spdlog/sinks/file_sinks.h"
+#include "spdlog/sinks/rotating_file_sink.h"
 
 int main()
 {

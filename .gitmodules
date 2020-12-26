@@ -7,3 +7,4 @@
 [submodule "submods/spdlog"]
 	path = submods/spdlog
 	url = https://github.com/gabime/spdlog.git
+	branch = v1.x
