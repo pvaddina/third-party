@@ -8,3 +8,7 @@
 	path = submods/spdlog
 	url = https://github.com/gabime/spdlog.git
 	branch = v1.x
+[submodule "submods/xbee_ansic_library"]
+	path = submods/xbee_ansic_library
+	url = https://github.com/digidotcom/xbee_ansic_library.git
+	branch = master
