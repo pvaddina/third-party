@@ -7,7 +7,8 @@ set(CMAKE_PREFIX_PATH "../../../install/yaml-cpp/static/${CMAKE_BUILD_TYPE}")
 
 find_package(yaml-cpp CONFIG REQUIRED)
 
-include_directories("../../../install/xbee/include")
+include_directories("../../../install/xbee/include"
+                    "../../../install/xbee/ports/posix")
 
 add_executable(${PROJECT_NAME} main.cpp)
 
