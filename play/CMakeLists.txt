@@ -3,3 +3,4 @@ project(All-Play-Projects)
 
 add_subdirectory(g3log)
 add_subdirectory(spdlog)
+add_subdirectory(xbee)
