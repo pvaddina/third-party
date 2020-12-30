@@ -1,9 +1,4 @@
 Devices:
     - 
         name: /dev/ttyUSB0
-    -
-        name: /dev/ttyUSB1
-    -
-        name: /dev/ttyUSB2
-    -
-        name: /dev/ttyUSB3
+        baudrate: 115200

@@ -11,7 +11,8 @@ int main()
 
   for (const auto& dev : config["Devices"])
   {
-    std::cout << dev["name"] << std::endl;
+    std::cout << "Device name:" << dev["name"] << std::endl;
+    std::cout << "Baudrate:" << dev["baudrate"] << std::endl;
   }
 
   xbee_serial_t serport;
