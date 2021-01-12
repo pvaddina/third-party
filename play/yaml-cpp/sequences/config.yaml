@@ -34,8 +34,3 @@ sequence4:
       v1: 4.1
       v2: 4.2
 
-# Not sure how to parse this ...
-#attributes:
-#  length:10000km
-#  originates:himalayas
-
