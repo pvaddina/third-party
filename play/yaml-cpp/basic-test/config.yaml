@@ -1,12 +1,12 @@
 name: ganga
 country: india
-length:
-  - len:10000
-  - units: km
-statesitflows:
-  - UP
-  - Bihar
-  - Uttarakhand
-  - WB
-  - Bangladesh
+flowsthrough:
+  - up
+  - bihar
+  - uttarakhand
+  - wb
+# Not sure how to parse this ...
+#attributes:
+#  length:10000km
+#  originates:himalayas
 

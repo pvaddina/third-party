@@ -1,0 +1,41 @@
+sequence1:
+  - one
+  - two
+  - three
+  - four
+
+sequence2:
+  - one
+      one.one
+      one.two
+  - tw0
+      two.one
+      two.two
+
+sequence3:
+  - one
+      1.1
+      1.2
+  - two
+      2.1
+  - three
+  - four
+      4.1
+      4.2
+
+sequence4:
+  - one:
+      v1: 1.1
+      v2: 1.2
+  - two:
+      v1: 2.1
+  - three:
+  - four:
+      v1: 4.1
+      v2: 4.2
+
+# Not sure how to parse this ...
+#attributes:
+#  length:10000km
+#  originates:himalayas
+
