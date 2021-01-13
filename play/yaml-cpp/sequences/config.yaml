@@ -47,4 +47,6 @@ sequence5:
   - six:
       v1: 6.1
       v2: 6.2
-
+  - '7,8,9': 1  # key is string type
+  - 10,11: 1		# key is string type
+  # - [12,13]: 1  --> An integer list as key as given mentioned here will not work ..

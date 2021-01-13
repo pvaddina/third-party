@@ -115,7 +115,22 @@ int main()
       {
         for (const auto& mit: it) // Note 'it' is a map and not a pair
         {
-          std::cout << mit.first.as<std::string>() << ":\n";
+          //Analyze the key
+          const YAML::Node& key = mit.first;
+          if(key.IsSequence())
+          {
+            std::cout << "is a sequence\n";
+            for(const auto& k: key)
+            {
+              std::cout << k.as<int>() << " ";
+            }
+          }
+          else
+          {
+            std::cout << key.as<std::string>() << ":\n";
+          }
+
+          // Analyze the value
           const YAML::Node& nd = mit.second;
           if(nd.IsMap())
           {
