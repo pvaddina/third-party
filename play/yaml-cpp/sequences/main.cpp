@@ -86,6 +86,56 @@ int main()
         }
       }
     }
+
+    std::cout << "6************************************************\n";
+    for(const auto& it : config["sequence5"])
+    {
+      for (const auto& mit: it) // Note 'it' is a map and not a pair
+      {
+        std::cout << mit.first.as<std::string>() << ":\n";
+        const YAML::Node& nd = mit.second;
+        if(nd.IsMap())
+        {
+          for(const auto& intMIt: nd)
+          {
+            std::cout << "     " << intMIt.first.as<std::string>() << "-->" << intMIt.second.as<double>() << "\n";
+          }
+        }
+        else if (nd.IsScalar())
+        {
+          std::cout << "     " << mit.second.as<std::string>() << "\n";
+        }
+      }
+    }
+
+    std::cout << "7************************************************\n";
+    for(const auto& it : config["sequence5"])
+    {
+      if (it.IsMap())
+      {
+        for (const auto& mit: it) // Note 'it' is a map and not a pair
+        {
+          std::cout << mit.first.as<std::string>() << ":\n";
+          const YAML::Node& nd = mit.second;
+          if(nd.IsMap())
+          {
+            for(const auto& intMIt: nd)
+            {
+              std::cout << "     " << intMIt.first.as<std::string>() << "-->" << intMIt.second.as<double>() << "\n";
+            }
+          }
+          else
+          {
+            std::cout << "     " << mit.second.as<std::string>() << "\n";
+          }
+        }
+      }
+      else
+      {
+        std::cout << it.as<std::string>() << "\n";
+      }
+
+    }
   } catch (const YAML::Exception& exp) {
     std::cout << exp.what() << std::endl;
   }
