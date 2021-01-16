@@ -16,7 +16,7 @@ gen_cmake_cmd = "cmake .. -DCMAKE_BUILD_TYPE={}"
 build_cmd = "cmake --build ."
 build_install_cmd = "cmake --build . --target install"
 
-cmds = {
+submodproj = {
           "g3log": {
                       "repo": "submods/g3log",
                       "installdir": "install/g3log",
@@ -120,23 +120,41 @@ def ExecSubMod(mod):
     print("Install pre initialization step failed")
 
 
+def PHelp():
+  print("Usage:")
+  print("1. Update and compile all submodules: python3 build_and_install.py --a")
+  print("2. Update all submodules but compile only one submodule: python3 build_and_install.py --s <sub-project-name>")
+  print("3. Build the consumer projects: python3 build_and_install.py --c <path-to-the-consumer-project>")
+  print("3.1 Example: Build all examples under play directory --> python3 build_and_install.py --c play")
+  print("3.2 Example: Build all examples of yaml-cpp project: python3 build_and_install.py --c play/yaml-cpp")
+  print("3.3 Example: Build only the example 'sequences' in the project yaml-cpp: python3 build_and_install.py --c play/yaml-cpp/sequences")
+
+
 if __name__ == '__main__':
-  init()
+  acceptableOpts = ['--a', '--s', '--c']
   if len(sys.argv) > 1:
-    proj = sys.argv[1]
-    if proj in cmds.keys():
-      ExecSubMod(cmds[proj])
+    opt = sys.argv[1]
+    if opt not in acceptableOpts:
+      PHelp()
+    elif opt == '--a':
+      init()
+      for proj in submodproj.keys():
+        ExecSubMod(submodproj[proj])
+    elif len(sys.argv) > 2:
+      proj = sys.argv[2]
+      if opt == '--s':
+        ExecSubMod(submodproj[proj])
+      else:
+        projDir = "{}/{}/{}".format(curWorkingDir, proj, "build")
+        DeleteDir(projDir)
+        CreateDir(projDir)
+        allBuildCmds = "cd {}".format(projDir) + seperator + gen_cmake_cmd.format("Debug") + seperator + build_cmd
+        print("Used command: {}".format(allBuildCmds))
+        subprocess.call(allBuildCmds, shell=True)
     else:
-      print("Not a predefined project. Assuming one of the consumer projects")
-      projDir = "{}/{}/{}".format(curWorkingDir, proj, "build")
-      DeleteDir(projDir)
-      CreateDir(projDir)
-      allBuildCmds = "cd {}".format(projDir) + seperator + gen_cmake_cmd.format("Debug") + seperator + build_cmd
-      print("Used command: {}".format(allBuildCmds))
-      subprocess.call(allBuildCmds, shell=True)
+      PHelp()
   else:
-    for proj in cmds.keys():
-      ExecSubMod(cmds[proj])
+    PHelp()
 
 
 
