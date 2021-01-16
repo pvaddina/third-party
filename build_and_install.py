@@ -123,11 +123,12 @@ def ExecSubMod(mod):
 def PHelp():
   print("Usage:")
   print("1. Update and compile all submodules: python3 build_and_install.py --a")
-  print("2. Update all submodules but compile only one submodule: python3 build_and_install.py --s <sub-project-name>")
+  print("2. Update all submodules but compile only one submodule(Note only name of the submodule/wrapper required): python3 build_and_install.py --s <submodule-wrapper-name>")
+  print("2.1 Example: Build only yaml-cpp --> python3 build_and_install.py --s yaml-cpp")
   print("3. Build the consumer projects: python3 build_and_install.py --c <path-to-the-consumer-project>")
   print("3.1 Example: Build all examples under play directory --> python3 build_and_install.py --c play")
-  print("3.2 Example: Build all examples of yaml-cpp project: python3 build_and_install.py --c play/yaml-cpp")
-  print("3.3 Example: Build only the example 'sequences' in the project yaml-cpp: python3 build_and_install.py --c play/yaml-cpp/sequences")
+  print("3.2 Example: Build all examples of yaml-cpp project --> python3 build_and_install.py --c play/yaml-cpp")
+  print("3.3 Example: Build only the example 'sequences' in the project yaml-cpp --> python3 build_and_install.py --c play/yaml-cpp/sequences")
 
 
 if __name__ == '__main__':
