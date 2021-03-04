@@ -11,7 +11,7 @@ if detectPlatform == "Windows":
 
 curWorkingDir = os.path.dirname(os.path.realpath(__file__))
 
-update_cmd = "git submodule update --remote"
+update_cmd = "git submodule update --init --force --remote"
 gen_cmake_cmd = "cmake .. -DCMAKE_BUILD_TYPE={}"
 build_cmd = "cmake --build ."
 build_install_cmd = "cmake --build . --target install"
